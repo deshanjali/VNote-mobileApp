@@ -249,9 +249,12 @@ public class NoteActivity extends AppCompatActivity
     }
 
     private void  sendEmail() {
-        CourseInfo course = (CourseInfo) mSpinnerCourses.getSelectedItem();
+
+        String noteTitle = mNoteCursor.getString(mNoteTitlePos);
+
+        //CourseInfo course = (CourseInfo) mSpinnerCourses.getSelectedItem();
         String subject = mTextNoteTitle.getText().toString();
-        String text = "Checkout what I learned in the course \"" + course.getTitle() + "\"\n" + mTextNoteText.getText().toString();
+        String text = "Checkout what I learned in the course \"" + noteTitle + "\"\n" + mTextNoteText.getText().toString();
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc2822");
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
