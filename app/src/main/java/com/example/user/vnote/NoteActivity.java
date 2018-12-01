@@ -1,6 +1,7 @@
 package com.example.user.vnote;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -213,9 +214,18 @@ public class NoteActivity extends AppCompatActivity
             finish();
         } else if (id == R.id.action_next) {
             moveNext();
+        } else if (id == R.id.action_set_reminder){
+            showReminderNotification();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showReminderNotification() {
+        String noteTitle = mTextNoteTitle.getText().toString();
+        String noteText = mTextNoteText.getText().toString();
+        int noteId = mNoteId;
+        NoteReminderNotification.notify(this, noteTitle, noteText, noteId);
     }
 
     @Override
@@ -389,7 +399,7 @@ public class NoteActivity extends AppCompatActivity
         mCourseIdPos = mNoteCursor.getColumnIndex(NoteInfoEntry.COLUMN_COURSE_ID);
         mNoteTitlePos = mNoteCursor.getColumnIndex(NoteInfoEntry.COLUMN_NOTE_TITLE);
         mNoteTextPos = mNoteCursor.getColumnIndex(NoteInfoEntry.COLUMN_NOTE_TEXT);
-        mNoteCursor.moveToNext();
+        mNoteCursor.moveToFirst();
         mNotesQueryFinished = true;
         displayNoteWhenQueriesFinished();
     }
