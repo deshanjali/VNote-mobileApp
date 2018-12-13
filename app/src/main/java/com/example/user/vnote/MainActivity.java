@@ -193,10 +193,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_courses) {
             displayCourses();
         } else if (id == R.id.nav_share) {
-//            handleSection("Share");
             handleShare();
         } else if (id == R.id.nav_send) {
-            handleSection("Send");
+            handleSection();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -204,16 +203,21 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void handleShare() {
-        View view = findViewById(R.id.list_items);
-        Snackbar.make(view, "Share to - " +
-                PreferenceManager.getDefaultSharedPreferences(this).getString("user_favorite_social", ""),
-                Snackbar.LENGTH_LONG).show();
+    private void handleSection() {
+            View view = findViewById(R.id.list_items);
+            Snackbar.make(view, "Share to - " +
+                            PreferenceManager.getDefaultSharedPreferences(this).getString("user_favorite_social", ""),
+                    Snackbar.LENGTH_LONG).show();
     }
 
-    private void handleSection(String message) {
-        View view = findViewById(R.id.list_items);
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+
+
+    private void handleShare() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 
     @Override
